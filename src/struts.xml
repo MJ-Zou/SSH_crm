@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--设置上传文件总大小 默认2M-->
+    <constant name="struts.multipart.maxSize" value="20971520"/>
+
+    <!--包结构-->
+    <package name="crm" extends="struts-default" namespace="/">
+
+        <!--配置拦截器-->
+        <interceptors>
+            <interceptor name="userInterceptor" class="interceptor.UserInterceptor"/>
+        </interceptors>
+
+        <!--全局的结果页面-->
+        <global-results>
+            <result name="login" type="redirect">/login.jsp</result>
+        </global-results>
+
+        <!--客户的模块-->
+        <action name="customer_*" class="customerAction" method="{1}">
+            <result name="page">/jsp/customer/list.jsp</result>
+            <result name="initAddUI">/jsp/customer/add.jsp</result>
+            <result name="save" type="redirectAction">customer_findByPage.action</result>
+            <result name="delete" type="redirectAction">customer_findByPage.action</result>
+            <result name="update" type="redirectAction">customer_findByPage.action</result>
+            <result name="input">jsp/error.jsp</result>
+            <result name="initUpdate">jsp/customer/edit.jsp</result>
+            <result name="findBySource">jsp/totals/sources.jsp</result>
+
+            <interceptor-ref name="userInterceptor"/>
+
+            <!--引入默认的拦截器-->
+            <interceptor-ref name="defaultStack">
+                <!--决定上传文件的类型-->
+                <param name="fileUpload.allowedExtensions">.jpg,.txt,.pdf</param>
+            </interceptor-ref>
+        </action>
+
+        <!--用户的模块-->
+        <action name="user_*" class="userAction" method="{1}">
+            <result name="loginOK" type="redirect">/index.jsp</result>
+            <interceptor-ref name="userInterceptor">
+                <param name="excludeMethods">login,regist,checkCode</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+
+        <!--字典的模块-->
+        <action name="dict_*" class="dictAction" method="{1}">
+            <interceptor-ref name="userInterceptor"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+
+        <!--联系人的模块-->
+        <action name="linkman_*" class="linkmanAction" method="{1}">
+            <result name="page">jsp/linkman/list.jsp</result>
+            <interceptor-ref name="userInterceptor"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+
+        <!--客户拜访模块-->
+        <action name="visit_*" class="visitAction" method="{1}">
+            <result name="page">jsp/visit/list.jsp</result>
+            <result name="save" type="redirectAction">visit_findByPage.action</result>
+            <interceptor-ref name="userInterceptor"/>
+            <interceptor-ref name="defaultStack"/>
+        </action>
+
+
+
+    </package>
+
+
+</struts>
+
+
+
+
+
+
+
+
+
+
+
+
+
