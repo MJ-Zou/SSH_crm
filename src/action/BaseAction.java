@@ -2,7 +2,6 @@ package action;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 /**
  * Action 的父类
  */
