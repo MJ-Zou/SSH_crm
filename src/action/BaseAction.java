@@ -2,6 +2,7 @@ package action;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * Action 的父类
  */
@@ -36,6 +37,7 @@ public class BaseAction extends ActionSupport {
     public void setVs(String key, Object obj) {
         ActionContext.getContext().getValueStack().set(key, obj);
     }
+
     //调用值栈对象的push方法
     public void pushVs(Object obj) {
         ActionContext.getContext().getValueStack().push(obj);
